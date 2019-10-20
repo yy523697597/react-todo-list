@@ -1,15 +1,13 @@
 import React, { Component, Fragment } from "react";
-import Item from "./item";
 import { Input, Button, List } from "antd";
 import store from "./store/index";
 import "antd/dist/antd.css";
-class xjj extends Component {
+class Todo extends Component {
   constructor(props) {
     super(props);
     this.state = store.getState();
 
-    this.deleteItem = this.deleteItem.bind(this);
-    this.getItem = this.getItem.bind(this);
+    // this.deleteItem = this.deleteItem.bind(this);
     this.changeInputValue = this.changeInputValue.bind(this);
     this.storeChange = this.storeChange.bind(this);
     this.addList = this.addList.bind(this);
@@ -28,25 +26,21 @@ class xjj extends Component {
             style={{ width: "250px", margin: "10px 10px" }}
           />
           <Button type="primary" onClick={this.addList}>
-            增加服务
+            添加日程
           </Button>
         </div>
         <List
           bordered
           dataSource={this.state.list}
-          renderItem={item => <List.Item>{item}</List.Item>}
+          renderItem={(item, index) => (
+            <List.Item onClick={this.deleteItem.bind(this, index)}>
+              {item}
+            </List.Item>
+          )}
           style={{ width: "250px", marginLeft: "10px" }}
         />
       </Fragment>
     );
-  }
-
-  getItem() {
-    return this.state.list.map((item, index) => {
-      return (
-        <Item content={item} deleteItem={this.deleteItem} key={item + index} />
-      );
-    });
   }
   changeInputValue(e) {
     const action = {
@@ -64,12 +58,11 @@ class xjj extends Component {
   }
 
   deleteItem(index) {
-    console.log(index);
-    let list = this.state.list;
-    list.splice(index, 1);
-    this.setState({
-      list
-    });
+    const action = {
+      type: "delete-item",
+      value: index
+    };
+    store.dispatch(action);
   }
 
   storeChange() {
@@ -77,4 +70,4 @@ class xjj extends Component {
     this.setState(store.getState());
   }
 }
-export default xjj;
+export default Todo;

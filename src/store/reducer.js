@@ -8,18 +8,24 @@ const defaultStore = {
 };
 export default (state = defaultStore, action) => {
   const newState = JSON.parse(JSON.stringify(state));
-  if (action.type === "change_input_value") {
-    newState.inputValue = action.value;
-    return newState;
-  } else if (action.type === "add_list_item") {
-    if (newState.inputValue && newState.inputValue.trim()) {
-      newState.list.push(newState.inputValue);
-      newState.inputValue = "";
+  switch (action.type) {
+    case "change_input_value":
+      newState.inputValue = action.value;
       return newState;
-    } else {
-      alert("日程不能为空");
-    }
-  } else {
-    return state;
+    case "add_list_item":
+      if (newState.inputValue && newState.inputValue.trim()) {
+        newState.list.push(newState.inputValue);
+        newState.inputValue = "";
+        return newState;
+      } else {
+        alert("日程不能为空");
+      }
+      break;
+    case "delete-item":
+      // console.log(action.value);
+      newState.list.splice(action.value, 1);
+      return newState;
+    default:
+      return state;
   }
 };
