@@ -1,18 +1,17 @@
 import React, { Component, Fragment } from "react";
-import { Input, Button, List } from "antd";
+import TodoListUi from "./todo-ui";
 import {
   DELETE_ITEM,
   CHANGE_INPUT_VALUE,
   ADD_LIST_ITEM
 } from "./store/action-types";
 import store from "./store/index";
-import "antd/dist/antd.css";
 class Todo extends Component {
   constructor(props) {
     super(props);
     this.state = store.getState();
 
-    // this.deleteItem = this.deleteItem.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
     this.changeInputValue = this.changeInputValue.bind(this);
     this.storeChange = this.storeChange.bind(this);
     this.addList = this.addList.bind(this);
@@ -22,29 +21,13 @@ class Todo extends Component {
 
   render() {
     return (
-      <Fragment>
-        <div>
-          <Input
-            value={this.state.inputValue}
-            onChange={this.changeInputValue}
-            placeholder="请输入您的服务"
-            style={{ width: "250px", margin: "10px 10px" }}
-          />
-          <Button type="primary" onClick={this.addList}>
-            添加日程
-          </Button>
-        </div>
-        <List
-          bordered
-          dataSource={this.state.list}
-          renderItem={(item, index) => (
-            <List.Item onClick={this.deleteItem.bind(this, index)}>
-              {item}
-            </List.Item>
-          )}
-          style={{ width: "250px", marginLeft: "10px" }}
-        />
-      </Fragment>
+      <TodoListUi
+        inputValue={this.state.inputValue}
+        list={this.state.list}
+        changeInputValue={this.changeInputValue}
+        deleteItem={this.deleteItem}
+        addList={this.addList}
+      />
     );
   }
   changeInputValue(e) {
