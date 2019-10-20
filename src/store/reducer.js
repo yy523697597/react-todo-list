@@ -1,3 +1,4 @@
+import { DELETE_ITEM, CHANGE_INPUT_VALUE, ADD_LIST_ITEM } from "./action-types";
 const defaultStore = {
   inputValue: "",
   list: [
@@ -9,10 +10,10 @@ const defaultStore = {
 export default (state = defaultStore, action) => {
   const newState = JSON.parse(JSON.stringify(state));
   switch (action.type) {
-    case "change_input_value":
+    case CHANGE_INPUT_VALUE:
       newState.inputValue = action.value;
       return newState;
-    case "add_list_item":
+    case ADD_LIST_ITEM:
       if (newState.inputValue && newState.inputValue.trim()) {
         newState.list.push(newState.inputValue);
         newState.inputValue = "";
@@ -21,7 +22,7 @@ export default (state = defaultStore, action) => {
         alert("日程不能为空");
       }
       break;
-    case "delete-item":
+    case DELETE_ITEM:
       // console.log(action.value);
       newState.list.splice(action.value, 1);
       return newState;

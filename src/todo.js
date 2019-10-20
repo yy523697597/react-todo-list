@@ -1,5 +1,10 @@
 import React, { Component, Fragment } from "react";
 import { Input, Button, List } from "antd";
+import {
+  DELETE_ITEM,
+  CHANGE_INPUT_VALUE,
+  ADD_LIST_ITEM
+} from "./store/action-types";
 import store from "./store/index";
 import "antd/dist/antd.css";
 class Todo extends Component {
@@ -44,7 +49,7 @@ class Todo extends Component {
   }
   changeInputValue(e) {
     const action = {
-      type: "change_input_value",
+      type: CHANGE_INPUT_VALUE,
       value: e.target.value
     };
     store.dispatch(action);
@@ -52,14 +57,14 @@ class Todo extends Component {
 
   addList() {
     const action = {
-      type: "add_list_item"
+      type: ADD_LIST_ITEM
     };
     store.dispatch(action);
   }
 
   deleteItem(index) {
     const action = {
-      type: "delete-item",
+      type: DELETE_ITEM,
       value: index
     };
     store.dispatch(action);
