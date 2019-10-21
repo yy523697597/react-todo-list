@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from "react";
 import TodoListUi from "./todo-ui";
+import axios from "axios";
 import {
   DELETE_ITEM,
   CHANGE_INPUT_VALUE,
-  ADD_LIST_ITEM
+  ADD_LIST_ITEM,
+  GET_LIST
 } from "./store/action-types";
 import store from "./store/index";
 class Todo extends Component {
@@ -56,6 +58,16 @@ class Todo extends Component {
   storeChange() {
     console.log(store.getState());
     this.setState(store.getState());
+  }
+
+  async componentDidMount() {
+    const res = await axios.get("/mock/getYuiTodoList");
+    console.log(res);
+    const action = {
+      type: GET_LIST,
+      value: res.data
+    };
+    store.dispatch(action);
   }
 }
 export default Todo;

@@ -1,11 +1,12 @@
-import { DELETE_ITEM, CHANGE_INPUT_VALUE, ADD_LIST_ITEM } from "./action-types";
+import {
+  DELETE_ITEM,
+  CHANGE_INPUT_VALUE,
+  ADD_LIST_ITEM,
+  GET_LIST
+} from "./action-types";
 const defaultStore = {
   inputValue: "",
-  list: [
-    "早8点开晨会，分配今天的开发工作",
-    "早9点和项目经理作开发需求讨论会",
-    "晚5:30对今日代码进行review"
-  ]
+  list: []
 };
 export default (state = defaultStore, action) => {
   const newState = JSON.parse(JSON.stringify(state));
@@ -25,6 +26,10 @@ export default (state = defaultStore, action) => {
     case DELETE_ITEM:
       // console.log(action.value);
       newState.list.splice(action.value, 1);
+      return newState;
+
+    case GET_LIST:
+      newState.list = action.value;
       return newState;
     default:
       return state;
