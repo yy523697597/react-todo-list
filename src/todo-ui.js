@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Fragment } from "react";
 
 import { Input, Button, List } from "antd";
 import "antd/dist/antd.css";

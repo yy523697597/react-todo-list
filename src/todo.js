@@ -1,12 +1,11 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import TodoListUi from "./todo-ui";
-import axios from "axios";
 import {
-  DELETE_ITEM,
-  CHANGE_INPUT_VALUE,
-  ADD_LIST_ITEM,
-  GET_LIST
-} from "./store/action-types";
+  getTodoList,
+  changeInputAction,
+  addListItemAction,
+  deleteItemAction
+} from "./store/action-creators";
 import store from "./store/index";
 class Todo extends Component {
   constructor(props) {
@@ -33,25 +32,17 @@ class Todo extends Component {
     );
   }
   changeInputValue(e) {
-    const action = {
-      type: CHANGE_INPUT_VALUE,
-      value: e.target.value
-    };
+    const action = changeInputAction(e.target.value);
     store.dispatch(action);
   }
 
   addList() {
-    const action = {
-      type: ADD_LIST_ITEM
-    };
+    const action = addListItemAction();
     store.dispatch(action);
   }
 
   deleteItem(index) {
-    const action = {
-      type: DELETE_ITEM,
-      value: index
-    };
+    const action = deleteItemAction(index);
     store.dispatch(action);
   }
 
@@ -60,13 +51,8 @@ class Todo extends Component {
     this.setState(store.getState());
   }
 
-  async componentDidMount() {
-    const res = await axios.get("/mock/getYuiTodoList");
-    console.log(res);
-    const action = {
-      type: GET_LIST,
-      value: res.data
-    };
+  componentDidMount() {
+    const action = getTodoList();
     store.dispatch(action);
   }
 }
